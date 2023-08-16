@@ -13,6 +13,30 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 
         <link href="{{ asset('app.css') }}" rel="stylesheet" type="text/css" />
+        <style type="text/css">
+            ul{
+                list-style-type: none;
+            }
+            .caret{
+                cursor: pointer;
+                user-select: none;
+            }
+            .caret::before{
+                content: "\25B6";
+                color: black;
+                display: inline-block;
+                margin-right: 6px;
+            }
+            .caret-down::before{
+                transform: rotate(90deg);
+            }
+            .nested{
+                display:none;
+            }
+            .active{
+                display: block;
+            }
+        </style>
     </head>
     <body class="antialiased bg-gray-100 ">
         <div class="block mx-6 mt-4" style="padding-bottom: 4px; align-content: center;">
@@ -23,10 +47,8 @@
         <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen">
             <div class="bg-white p-6">
                 <h3> Territories </h3>
-                <span>Here are the list of territories</span>
-                <ul id="territories">
-                    
-                </ul>
+                <span>Here are the list of territories:</span>
+                
             </div>
         </div>
     </body>
