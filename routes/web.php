@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 
+use App\Http\Controllers\LoginController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,11 +18,28 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Route::get('/account/login', function () {
     return view('welcome');
 });
 
-Route::post('/account/login', "LoginController@authenticate")->name('/account/login');
+Route::post('/account/login', function (Request $request){
+    $credentials = [
+        "username" => $request->username,
+        "password" => $request->password
+    ];
+
+    $response = Http::post('http://netzwelt-devtest.azurewebsites.net/Account/SignIn', $credentials);
+    $user = $response->json();
+    
+    if($response->status() == 200){
+        
+    }else{
+        return back()->withErrors([
+            'invalid' => $user
+        ]);
+    }
+
+})->name('/account/login');
