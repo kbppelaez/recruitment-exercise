@@ -14,16 +14,19 @@
 
         <link href="{{ asset('app.css') }}" rel="stylesheet" type="text/css" />
     </head>
-    <body class="antialiased">
-        <div class="relative bg-gray-100 sm:flex sm:justify-center sm:items-center min-h-screen">
-            <div class="mx-6 mt-4" style="align-content: stretch;">
-                <a href="{{ route('/account/logout') }}" class="ml-4 font-semibold bg-white text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500" style=" padding: 0.5em">
-                    Logout
-                </a>
-            </div>
-            <br>
-            <div class="mx-6 mt-4">
-                home page here
+    <body class="antialiased bg-gray-100 ">
+        <div class="block mx-6 mt-4" style="padding-bottom: 4px; align-content: center;">
+            <a href="{{ route('/account/logout') }}">
+                <button class="mx-6" style="float:right; padding: 0.5em; background-color:#B7EBBD"> Logout </button>
+            </a>
+        </div>
+        <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen">
+            <div class="bg-white p-6">
+                <h3> Territories </h3>
+                <span>Here are the list of territories</span>
+                <ul id="territories">
+                    
+                </ul>
             </div>
         </div>
     </body>
