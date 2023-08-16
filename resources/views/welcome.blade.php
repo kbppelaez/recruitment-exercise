@@ -24,7 +24,7 @@
                     <div class="mx-6">
                         <label for="username">Username</label>
                         <br>
-                        <input style="padding: 1px 5px; border: 1px solid #4CAF50" type="text" id="username" value="{{ old('username') }}" required autofocus placeholder="Username" />
+                        <input style="padding: 1px 5px; border: 1px solid #4CAF50" type="text" id="username" name="username" value="{{ old('username') }}" required autofocus placeholder="Username" />
 
                         @if($errors->has('email'))
                             <span class="invalid-feedback bg-red-500">
@@ -36,7 +36,7 @@
                     <div class="mx-6 mt-4">
                         <label for="password">Password</label>
                         <br>
-                        <input style="padding: 1px 5px; border: 1px solid #4CAF50"  type="password" id="password" value="{{ old('password') }}" required placeholder="Password" />
+                        <input style="padding: 1px 5px; border: 1px solid #4CAF50"  type="password" id="password" name="password" value="{{ old('password') }}" required placeholder="Password" />
 
                         @if($errors->has('password'))
                             <span class="invalid-feedback bg-red-500">
