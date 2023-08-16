@@ -19,12 +19,51 @@ use App\Http\Controllers\LoginController;
 
 Route::get('/', function (Request $request) {
     if($request->session()->has('loggedin')){
+        //retrieval of data
         $response = Http::get('http://netzwelt-devtest.azurewebsites.net/Territories/All');
-
         $territories = $response->json();
+        $territories = $territories['data'];
 
-        dd($territories['data']);
-        return view('home');
+        //data holders
+        $parents = [];
+        $places = [];
+        $unaccounted = [];
+
+        //processing flat data into a hierarchy
+        for($i = 0; $i < sizeof($territories); $i += 1){
+            //add this place to the places array
+            $place = $territories[$i];
+            $places[$place['id']] = [
+                "name" => $place["name"],
+                "parent" => $place["parent"],
+                "child" => []
+            ];
+
+            //if this place has no parent, add it to places array
+            if(is_null($place['parent'])){
+                array_push($parents, $place['id']);
+            }else{ //if it has a parent...
+
+                //if the parent has already been added before, record this place as its child
+                if(array_key_exists($place['parent'], $places)){
+                    array_push($places[$place['parent']]['child'], $place['id']);
+                }else{ //else, record it later
+                    array_push($unaccounted, $place['id']);
+                }
+            }
+        }
+
+        for($i=0; $i < sizeof($unaccounted); $i+=1){
+            $thisplace = $places[$unaccounted[$i]];
+            $parent = $thisplace['parent'];
+
+            array_push($places[$parent]['child'], $unaccounted[$i]);
+        }
+
+        unset($territories);
+        unset($unaccounted);
+
+        return view('home')->with(["parents"=>$parents, "places"=>$places]);
     }else{
         return redirect()->intended('/account/login');
     }
