@@ -16,6 +16,10 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/', function (Request $request) {
+    return redirect()->intended('/home/index');
+});
+
+Route::get('/home/index', function (Request $request){
     if($request->session()->has('loggedin')){
         //retrieval of data
         $response = Http::get('http://netzwelt-devtest.azurewebsites.net/Territories/All');
@@ -65,7 +69,7 @@ Route::get('/', function (Request $request) {
     }else{
         return redirect()->intended('/account/login');
     }
-});
+})->name('/home/index');
 
 Route::get('/account/login', function (Request $request) {
     if($request->session()->has('loggedin')){
