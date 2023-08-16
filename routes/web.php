@@ -18,11 +18,24 @@ use App\Http\Controllers\LoginController;
 */
 
 Route::get('/', function (Request $request) {
-    return view('home');
+    if($request->session()->has('loggedin')){
+        $response = Http::get('http://netzwelt-devtest.azurewebsites.net/Territories/All');
+
+        $territories = $response->json();
+
+        dd($territories['data']);
+        return view('home');
+    }else{
+        return redirect()->intended('/account/login');
+    }
 });
 
 Route::get('/account/login', function (Request $request) {
-    return view('welcome');
+    if($request->session()->has('loggedin')){
+        return redirect()->intended('/');
+    }else{
+        return view('welcome');
+    }
 });
 
 Route::post('/account/login', function (Request $request){
@@ -48,3 +61,8 @@ Route::post('/account/login', function (Request $request){
     }
 
 })->name('/account/login');
+
+Route::get('/account/logout', function(Request $request){
+    $request->session()->invalidate();
+    return redirect()->intended('/account/login');
+})->name('/account/logout');
