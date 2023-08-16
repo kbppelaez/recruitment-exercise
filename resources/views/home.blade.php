@@ -16,7 +16,15 @@
     </head>
     <body class="antialiased">
         <div class="relative bg-gray-100 sm:flex sm:justify-center sm:items-center min-h-screen">
-            home page here
+            <div class="mx-6 mt-4" style="align-content: stretch;">
+                <a href="{{ route('/account/logout') }}" class="ml-4 font-semibold bg-white text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500" style=" padding: 0.5em">
+                    Logout
+                </a>
+            </div>
+            <br>
+            <div class="mx-6 mt-4">
+                home page here
+            </div>
         </div>
     </body>
 </html>
