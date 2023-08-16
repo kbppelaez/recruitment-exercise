@@ -17,28 +17,33 @@ use App\Http\Controllers\LoginController;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function (Request $request) {
     return view('home');
 });
 
-Route::get('/account/login', function () {
+Route::get('/account/login', function (Request $request) {
     return view('welcome');
 });
 
 Route::post('/account/login', function (Request $request){
+    //getting credentials from the form
     $credentials = [
         "username" => $request->username,
         "password" => $request->password
     ];
 
+    //requesting for credential validation
     $response = Http::post('http://netzwelt-devtest.azurewebsites.net/Account/SignIn', $credentials);
     $user = $response->json();
     
-    if($response->status() == 200){
-        
-    }else{
+    //checking of response status
+    if($response->status() == 200){  //if OK
+        $request->session()->regenerate();              //regenerate session token
+        $request->session()->put('loggedin', 'true');   //indicate that user has logged in
+        return redirect()->intended('/');               //redirect to home page
+    }else{ //if invalid
         return back()->withErrors([
-            'invalid' => $user
+            'invalid' => $user      //show error returned by API
         ]);
     }
 
