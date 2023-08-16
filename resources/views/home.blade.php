@@ -12,28 +12,36 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 
-        <link href="{{ asset('app.css') }}" rel="stylesheet" type="text/css" />
         <style type="text/css">
-            ul{
+            ul, #myUL {
                 list-style-type: none;
             }
-            .caret{
+                #myUL {
+                margin: 0;
+                padding: 0;
+            }
+            .caret {
                 cursor: pointer;
+                -webkit-user-select: none; /* Safari 3.1+ */
+                -moz-user-select: none; /* Firefox 2+ */
+                -ms-user-select: none; /* IE 10+ */
                 user-select: none;
             }
-            .caret::before{
+            .caret::before {
                 content: "\25B6";
                 color: black;
                 display: inline-block;
                 margin-right: 6px;
             }
-            .caret-down::before{
+            .caret-down::before {
+                -ms-transform: rotate(90deg); /* IE 9 */
+                -webkit-transform: rotate(90deg); /* Safari */'
                 transform: rotate(90deg);
             }
-            .nested{
-                display:none;
+            .nested {
+                display: ;display: none;
             }
-            .active{
+            .active {
                 display: block;
             }
         </style>
@@ -46,9 +54,32 @@
         </div>
         <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen">
             <div class="bg-white p-6">
-                <h3> Territories </h3>
+                <h1> <strong>Territories</strong> </h1>
                 <span>Here are the list of territories:</span>
-                
+                    <?php
+                        function createTerritoryList($parents, $places){
+                            $list = "";
+                            foreach($parents as $parent){
+                                $list = $list . "<li>";
+                                if(sizeof($places[$parent]['child']) > 0){
+                                    $list = $list . "<span class='caret'>";
+                                    $list = $list . $places[$parent]['name'];
+                                    $list = $list . "</span>";
+                                    $list = $list . "<ul class='nested'>";
+                                    $list = $list . createTerritoryList($places[$parent]['child'], $places);
+                                    $list = $list . "</ul>";
+                                }else{
+                                    $list = $list . $places[$parent]['name'];
+                                }
+                                $list = $list . "</li>";
+                            }
+                            return $list;
+                        }
+
+                        echo '<ul id="territories">';
+                        echo createTerritoryList($parents, $places);
+                        echo '</ul>';
+                    ?>
             </div>
         </div>
     </body>
