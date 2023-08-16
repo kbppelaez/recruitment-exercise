@@ -18,7 +18,7 @@
         <div class="relative bg-gray-100 sm:flex sm:justify-center sm:items-center min-h-screen">
 
             <div class="bg-white p-6">
-                <form action="{{ route('login') }}" method="POST">
+                <form action="{{ route('/account/login') }}" method="POST">
                     @csrf
 
                     <div class="mx-6">
