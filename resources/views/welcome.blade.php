@@ -25,12 +25,6 @@
                         <label for="username">Username</label>
                         <br>
                         <input style="padding: 1px 5px; border: 1px solid #4CAF50" type="text" id="username" name="username" value="{{ old('username') }}" required autofocus placeholder="Username" />
-
-                        @if($errors->has('email'))
-                            <span class="invalid-feedback bg-red-500">
-                                <strong>{{ $errors->first('email') }}</strong>
-                            </span>
-                        @endif
                     </div>
 
                     <div class="mx-6 mt-4">
@@ -38,9 +32,10 @@
                         <br>
                         <input style="padding: 1px 5px; border: 1px solid #4CAF50"  type="password" id="password" name="password" value="{{ old('password') }}" required placeholder="Password" />
 
-                        @if($errors->has('password'))
-                            <span class="invalid-feedback bg-red-500">
-                                <strong>{{ $errors->first('password') }}</strong>
+                        @if($errors->has('invalid'))
+                            <br>
+                            <span style="color: red;">
+                                <strong>{{ $errors->first('invalid') }}</strong>
                             </span>
                         @endif    
                     </div>
